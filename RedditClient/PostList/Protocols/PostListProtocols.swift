@@ -10,7 +10,7 @@ import UIKit
 protocol PostListViewProtocol: class {
     var presenter: PostListPresenterProtocol? { get set }
     func showPosts(with posts: [PostModel])
-    func showError()
+    func showError(message: String)
     func showLoading()
     func hideLoading()
 }
@@ -30,7 +30,7 @@ protocol PostListPresenterProtocol: class {
 
 protocol PostListInteractorOutputProtocol: class {
     func didRetrievePosts(_ posts: [PostModel])
-    func onError()
+    func onError(_ error: Error)
 }
 
 protocol PostListInteractorInputProtocol: class {
@@ -46,5 +46,5 @@ protocol PostListRemoteDataManagerInputProtocol: class {
 
 protocol PostListRemoteDataManagerOutputProtocol: class {
     func onPostsRetrieved(_ posts: [PostModel])
-    func onError()
+    func onError(_ error: RCErrorRemoteDataManager)
 }
