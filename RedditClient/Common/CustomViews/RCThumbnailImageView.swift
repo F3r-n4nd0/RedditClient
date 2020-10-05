@@ -22,12 +22,17 @@ class RCThumbnailImageView: UIImageView {
     
     private func configure() {
         layer.cornerRadius = 10
-        layer.borderColor = UIColor.systemGray3.cgColor
-        layer.borderWidth = 0.5
         clipsToBounds = true
         image = placeholderImage
         contentMode = .scaleAspectFill
         translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func downloadImage(fromURL url: URL) {
+        NetworkManager.shared.downloadImage(from: url) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async { self.image = image }
+        }
     }
 
 }

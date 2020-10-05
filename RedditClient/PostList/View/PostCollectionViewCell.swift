@@ -37,11 +37,22 @@ class PostCollectionViewCell: UICollectionViewCell {
         titleLabel.text = post.title
         infoLabel.text = "Submitted \(post.createdTimeAgo) by \(post.author)"
         numberCommentsLabel.text = "\(post.numberComments) comments"
+        switch post.thumbnail {
+        case .defaultImage:
+            thumbnailImageView.image = Image.link
+        case .image(url: let url):
+            thumbnailImageView.downloadImage(fromURL: url)
+        case .selfImage:
+            thumbnailImageView.image = Image.doc
+        }
     }
     
     
     private func configureView() {
         backgroundColor = Color.baseColor
+        layer.borderColor = UIColor.label.cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 10
     }
     
     private func configureThumbnailImageView() {

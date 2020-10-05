@@ -29,7 +29,8 @@ class RCFootNoteButton: UIButton {
     }
     
     private func configure() {
-        backgroundColor = .systemFill
+        backgroundColor = .clear
         translatesAutoresizingMaskIntoConstraints = false
     }
+    
 }
