@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+
+enum RCErrorRemoteDataManager: Error {
+    case badURL
+    case networkConnection
+    case invalidResponse
+    case invalidData
+}

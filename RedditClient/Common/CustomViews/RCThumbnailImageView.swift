@@ -9,12 +9,25 @@ import UIKit
 
 class RCThumbnailImageView: UIImageView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    let placeholderImage = Image.placeholder
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
     }
-    */
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configure() {
+        layer.cornerRadius = 10
+        layer.borderColor = UIColor.systemGray3.cgColor
+        layer.borderWidth = 0.5
+        clipsToBounds = true
+        image = placeholderImage
+        contentMode = .scaleAspectFill
+        translatesAutoresizingMaskIntoConstraints = false
+    }
 
 }
