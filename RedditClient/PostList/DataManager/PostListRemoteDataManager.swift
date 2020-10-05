@@ -9,11 +9,22 @@ import Foundation
 
 class PostListRemoteDataManager:PostListRemoteDataManagerInputProtocol {
 
+    private let limit = 10
+    
     var remoteRequestHandler: PostListRemoteDataManagerOutputProtocol?
     
     func retrievePostList() {
-        let endPoint = Endpoints.Posts.fetchAll(limit: 10)
-        guard let urlRequest = URL(string: endPoint.url) else {
+        let endPoint = Endpoints.Posts.fetchAll(limit: limit)
+        processRequest(with: endPoint.url)
+    }
+    
+    func retrievePostListFromLastPost(with id: String) {
+        let endPoint = Endpoints.Posts.fetchAllAfter(limit: limit, afterKey: id)
+        processRequest(with: endPoint.url)
+    }
+    
+    private func processRequest(with stringURL: String) {
+        guard let urlRequest = URL(string: stringURL) else {
             remoteRequestHandler?.onError(.badURL)
             return
         }

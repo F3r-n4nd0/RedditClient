@@ -25,6 +25,7 @@ protocol PostListPresenterProtocol: class {
     var interactor: PostListInteractorInputProtocol? { get set }
     var routing: PostListRoutingProtocol? { get set }
     func viewDidLoad()
+    func loadMorePost()
     func showPostDetail(forPost post: PostModel)
 }
 
@@ -37,11 +38,13 @@ protocol PostListInteractorInputProtocol: class {
     var presenter: PostListInteractorOutputProtocol? { get set }
     var remoteDatamanager: PostListRemoteDataManagerInputProtocol? { get set }
     func retrievePostList()
+    func retrievePostListFromLastPost(with id: String)
 }
 
 protocol PostListRemoteDataManagerInputProtocol: class {
     var remoteRequestHandler: PostListRemoteDataManagerOutputProtocol? { get set }
     func retrievePostList()
+    func retrievePostListFromLastPost(with id: String)
 }
 
 protocol PostListRemoteDataManagerOutputProtocol: class {

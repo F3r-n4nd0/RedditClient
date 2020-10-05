@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostListViewController: UIViewController {
+class PostListViewController: RCDataLoadingViewController {
     
     enum Section { case main }
     
@@ -41,6 +41,7 @@ class PostListViewController: UIViewController {
         collectionView.backgroundColor = Color.baseColor
         collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: PostCollectionViewCell.reuseID)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -58,10 +59,10 @@ class PostListViewController: UIViewController {
         }
     }
     
-    private func updatePosts(with posts: [PostModel]) {
+    private func updatePosts() {
         var snapshot = NSDiffableDataSourceSnapshot<Section,PostModel>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(posts)
+        snapshot.appendItems(self.posts)
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
@@ -84,7 +85,8 @@ class PostListViewController: UIViewController {
 extension PostListViewController: PostListViewProtocol {
     
     func showPosts(with posts: [PostModel]) {
-        updatePosts(with: posts)
+        self.posts.append(contentsOf: posts)
+        updatePosts()
     }
     
     func showError(message: String) {
@@ -92,11 +94,24 @@ extension PostListViewController: PostListViewProtocol {
     }
     
     func showLoading() {
-        
+        showloadingView()
     }
     
     func hideLoading() {
-        
+        dismissLoadingView()
+    }
+    
+}
+
+extension PostListViewController: UICollectionViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        if offsetY > contentHeight - height {
+            presenter?.loadMorePost()
+        }
     }
     
 }

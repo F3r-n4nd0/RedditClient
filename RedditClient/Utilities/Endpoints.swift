@@ -20,18 +20,24 @@ enum Endpoints {
     
     enum Posts: Endpoint {
         case fetchAll(limit: Int)
+        case fetchAllAfter(limit: Int, afterKey: String)
+        
         public var path: String {
             switch self {
             case .fetchAll(let limit):
                 return "/r/all/top/.json?t=all&limit=\(limit)"
+            case .fetchAllAfter(let limit, let afterKey):
+                return "/r/all/top/.json?t=all&limit=\(limit)&after=\(afterKey)"
             }
         }
+        
         public var url: String {
             switch self {
-            case .fetchAll:
+            case .fetchAll,.fetchAllAfter:
                 return "\(API.baseUrl)\(path)"
             }
         }
+        
     }
     
 }

@@ -8,12 +8,16 @@
 import Foundation
 
 class PostListInteractor: PostListInteractorInputProtocol {
-    
+
     weak var presenter: PostListInteractorOutputProtocol?
     var remoteDatamanager: PostListRemoteDataManagerInputProtocol?
     
     func retrievePostList() {
         remoteDatamanager?.retrievePostList()
+    }
+    
+    func retrievePostListFromLastPost(with id: String) {
+        remoteDatamanager?.retrievePostListFromLastPost(with: id)
     }
     
 }
