@@ -17,6 +17,9 @@ class PostListViewController: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<Section, PostModel>!
     var posts: [PostModel] = []
     
+    private let columnLayoutPortrait = UIHelper.createColumnFlowLayout(with: 1)
+    private let columnLayoutLandscape = UIHelper.createColumnFlowLayout(with: 2)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
@@ -32,9 +35,7 @@ class PostListViewController: UIViewController {
     }
     
     private func configureCollectionView() {
-        let columnLayout = RCColumnFlowLayout(cellsPerRow: 1, minimumInteritemSpacing: 10, minimumLineSpacing: 10,
-                                              sectionInset: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: columnLayout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: columnLayoutPortrait)
         view.addSubview(collectionView)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = Color.baseColor
@@ -64,6 +65,18 @@ class PostListViewController: UIViewController {
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { [weak self] context in
+            guard let self = self else { return }
+            if UIDevice.current.orientation == .portrait {
+                self.collectionView.collectionViewLayout = self.columnLayoutPortrait
+            } else {
+                self.collectionView.collectionViewLayout = self.columnLayoutLandscape
+            }
+        })
     }
     
 }
