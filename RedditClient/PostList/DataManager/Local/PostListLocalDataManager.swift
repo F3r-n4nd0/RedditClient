@@ -29,11 +29,10 @@ class PostListLocalDataManager: PostListLocalDataManagerInputProtocol {
             let encoder = JSONEncoder()
             let encodedData = try encoder.encode(ids)
             UserDefaults.standard.setValue(encodedData, forKey: Keys.postsIDs)
-            return
+            UserDefaults.standard.synchronize()
         } catch {
             throw RCPersistenceError.couldNotSaveObject
         }
-        
     }
     
 }

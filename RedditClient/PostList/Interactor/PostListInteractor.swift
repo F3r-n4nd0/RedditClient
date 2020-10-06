@@ -45,9 +45,18 @@ class PostListInteractor: PostListInteractorInputProtocol {
     
     private func loadFirstTime() {
         remoteDatamanager?.retrievePostList()
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationSaveData), name: Notifications.saveData, object: nil)
         do {
             guard let postdIds = try localDatamanager?.retrieveReadIdPosts() else { return }
             readPostsID = postdIds
+        } catch {
+            print(error)
+        }
+    }
+    
+    @objc private func notificationSaveData() {
+        do {
+            try localDatamanager?.saveReadIdPosts(ids: self.readPostsID)
         } catch {
             print(error)
         }

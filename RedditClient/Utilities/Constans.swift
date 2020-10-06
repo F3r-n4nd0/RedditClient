@@ -17,3 +17,7 @@ enum Image {
     static let doc = UIImage(systemName: "doc.plaintext")
     static let trash = UIImage(systemName: "trash.fill")
 }
+
+enum Notifications {
+    static let saveData =  Notification.Name("saveData")
+}

@@ -15,6 +15,7 @@ class PostListRouting: PostListRoutingProtocol {
         let presenter: PostListPresenterProtocol & PostListInteractorOutputProtocol = PostListPresenter()
         let interactor: PostListInteractorInputProtocol & PostListRemoteDataManagerOutputProtocol = PostListInteractor()
         let remoteDataManager: PostListRemoteDataManagerInputProtocol = PostListRemoteDataManager()
+        let localDataManager: PostListLocalDataManagerInputProtocol = PostListLocalDataManager()
         let routing: PostListRoutingProtocol = PostListRouting()
         
         viewController.presenter = presenter
@@ -23,6 +24,7 @@ class PostListRouting: PostListRoutingProtocol {
         presenter.interactor = interactor
         interactor.presenter = presenter
         interactor.remoteDatamanager = remoteDataManager
+        interactor.localDatamanager = localDataManager
         remoteDataManager.remoteRequestHandler = interactor
         
         return viewController
