@@ -11,6 +11,7 @@ class PostListInteractor: PostListInteractorInputProtocol {
     
     private var lastPostID: String?
     private var posts: [PostModel] = []
+    private var readPostsID: [String] = []
     
     weak var presenter: PostListInteractorOutputProtocol?
     var remoteDatamanager: PostListRemoteDataManagerInputProtocol?
@@ -18,7 +19,7 @@ class PostListInteractor: PostListInteractorInputProtocol {
     
     func retrievePostList() {
         guard let lastPostID = lastPostID else {
-            remoteDatamanager?.retrievePostList()
+            loadFirstTime()
             return
         }
         remoteDatamanager?.retrievePostListFromLastPost(with: lastPostID)
@@ -35,13 +36,33 @@ class PostListInteractor: PostListInteractorInputProtocol {
         presenter?.didRetrievePosts(posts)
     }
     
+    func markAsRead(_ post: PostModel) {
+        guard let index = posts.firstIndex(of: post)  else { return }
+        readPostsID.append(post.id)
+        posts[index].readStatus = .read
+        presenter?.didRetrievePosts(posts)
+    }
+    
+    private func loadFirstTime() {
+        remoteDatamanager?.retrievePostList()
+        do {
+            guard let postdIds = try localDatamanager?.retrieveReadIdPosts() else { return }
+            readPostsID = postdIds
+        } catch {
+            print(error)
+        }
+    }
+    
 }
 
 extension PostListInteractor: PostListRemoteDataManagerOutputProtocol {
     
     func onPostsRetrieved(_ posts: [PostModel]) {
         lastPostID = posts.last?.id
-        self.posts.append(contentsOf: posts)
+        for var post in posts {
+            post.readStatus = readPostsID.contains(post.id) ? .read : .unread
+            self.posts.append(post)
+        }
         presenter?.didRetrievePosts(self.posts)
     }
     

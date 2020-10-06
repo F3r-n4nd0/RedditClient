@@ -29,7 +29,7 @@ struct PostModel {
     let thumbnail: Thumbnail
     let url: URL
     let numberComments: Int
-    let readStatus: ReadStatus
+    var readStatus: ReadStatus
     
     var createdTimeAgo: String {
         return created.relativeTime

@@ -43,6 +43,7 @@ protocol PostListInteractorInputProtocol: class {
     func retrievePostList()
     func dismissPost(_ post: PostModel)
     func dismissAll()
+    func markAsRead(_ post: PostModel)
 }
 
 protocol PostListRemoteDataManagerInputProtocol: class {

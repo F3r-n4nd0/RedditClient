@@ -127,6 +127,11 @@ extension PostListViewController: UICollectionViewDelegate {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let post = dataSource.itemIdentifier(for: indexPath) else { return }
+        presenter?.showPostDetail(forPost: post)
+    }
+    
 }
 
 extension PostListViewController: PostCollectionViewCellDelegate {

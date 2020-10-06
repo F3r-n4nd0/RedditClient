@@ -34,6 +34,8 @@ class PostListPresenter: PostListPresenterProtocol {
     }
     
     func showPostDetail(forPost post: PostModel) {
+        view?.showLoading()
+        interactor?.markAsRead(post)
         routing?.presentPostDetailScreen(from: view!, forPost: post)
     }
     

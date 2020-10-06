@@ -27,11 +27,12 @@ class RCDataLoadingViewController: UIViewController {
     activityIndicator.startAnimating()
   }
     
-  func dismissLoadingView() {
-    DispatchQueue.main.async {
-      self.containerView.removeFromSuperview()
-      self.containerView = nil
+    func dismissLoadingView() {
+        if self.containerView == nil { return }
+        DispatchQueue.main.async {
+            self.containerView.removeFromSuperview()
+            self.containerView = nil
+        }
     }
-  }
   
 }
