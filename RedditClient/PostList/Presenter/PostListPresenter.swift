@@ -8,7 +8,7 @@
 import Foundation
 
 class PostListPresenter: PostListPresenterProtocol {
-
+  
     private var lastPostID: String?
     
     weak var view: PostListViewProtocol?
@@ -29,6 +29,12 @@ class PostListPresenter: PostListPresenterProtocol {
             return
         }
         interactor?.retrievePostListFromLastPost(with: lastPostID)
+    }
+    
+    func dismissPost(_ post: PostModel) {
+        guard let index = posts.firstIndex(of: post)  else { return }
+        posts.remove(at: index)
+        view?.showPosts(with: self.posts)
     }
     
     func showPostDetail(forPost post: PostModel) {

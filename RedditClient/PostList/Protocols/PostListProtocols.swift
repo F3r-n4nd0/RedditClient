@@ -27,6 +27,7 @@ protocol PostListPresenterProtocol: class {
     func viewDidLoad()
     func loadMorePost()
     func showPostDetail(forPost post: PostModel)
+    func dismissPost(_ post: PostModel)
 }
 
 protocol PostListInteractorOutputProtocol: class {

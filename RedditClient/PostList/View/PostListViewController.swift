@@ -54,6 +54,7 @@ class PostListViewController: RCDataLoadingViewController {
         dataSource = UICollectionViewDiffableDataSource<Section,PostModel>( collectionView: collectionView) { colletionView, indexPath, post -> UICollectionViewCell? in
             let cell = colletionView.dequeueReusableCell(withReuseIdentifier: PostCollectionViewCell.reuseID, for: indexPath) as! PostCollectionViewCell
             cell.load(with: post)
+            cell.delegate = self
             return cell
         }
     }
@@ -113,6 +114,16 @@ extension PostListViewController: UICollectionViewDelegate {
         if offsetY > contentHeight - height {
             presenter?.loadMorePost()
         }
+    }
+    
+}
+
+extension PostListViewController: PostCollectionViewCellDelegate {
+    
+    func selectDismiss(cell: PostCollectionViewCell) {
+        guard  let indexPath = collectionView.indexPath(for: cell),
+               let post: PostModel = dataSource.itemIdentifier(for: indexPath) else { return }
+        presenter?.dismissPost(post)
     }
     
 }

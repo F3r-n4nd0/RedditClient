@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol PostCollectionViewCellDelegate: class {
+    func selectDismiss(cell: PostCollectionViewCell)
+}
+
 class PostCollectionViewCell: UICollectionViewCell {
 
     static let reuseID = "PostCollectionViewCell"
@@ -18,6 +22,8 @@ class PostCollectionViewCell: UICollectionViewCell {
     private let infoLabel = RCInfoLabel(textAlignment: .left)
     private let numberCommentsLabel = RCInfoLabel(textAlignment: .left)
     private let unreadDismissButton =  RCFootNoteButton(title: "Dismiss")
+    
+    weak var delegate: PostCollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,11 +105,16 @@ class PostCollectionViewCell: UICollectionViewCell {
     
     private func configureDismissButton() {
         contentView.addSubview(unreadDismissButton)
+        unreadDismissButton.addTarget(self, action: #selector(touchUpInsideDismissButton), for: .touchUpInside)
         NSLayoutConstraint.activate([
             unreadDismissButton.leadingAnchor.constraint(equalTo: numberCommentsLabel.trailingAnchor, constant: 10),
             unreadDismissButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
             unreadDismissButton.heightAnchor.constraint(equalToConstant: 15)
         ])
+    }
+    
+    @objc private func touchUpInsideDismissButton() {
+        self.delegate?.selectDismiss(cell: self)
     }
 
 }
