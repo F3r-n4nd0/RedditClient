@@ -29,7 +29,10 @@ class PostListRouting: PostListRoutingProtocol {
     }
     
     func presentPostDetailScreen(from view: PostListViewProtocol, forPost post: PostModel) {
-        
+        let postDetailViewController = PostDetailRouting.createPostDetailModule(forPost: post)
+        if let sourceView = view as? UIViewController {
+            sourceView.present(postDetailViewController, animated: true)
+        }
     }
     
 }
