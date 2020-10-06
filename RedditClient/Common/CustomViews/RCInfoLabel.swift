@@ -23,6 +23,12 @@ class RCInfoLabel: UILabel {
         self.textAlignment = textAlignment
         self.textColor = .secondaryLabel
     }
+
+    convenience init(textColor: UIColor, textAlignment: NSTextAlignment) {
+        self.init(frame: .zero)
+        self.textAlignment = textAlignment
+        self.textColor = textColor
+    }
     
     private func configure() {
         font = UIFont.preferredFont(forTextStyle: .footnote)

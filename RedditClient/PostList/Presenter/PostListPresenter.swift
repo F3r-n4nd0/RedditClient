@@ -8,14 +8,10 @@
 import Foundation
 
 class PostListPresenter: PostListPresenterProtocol {
-  
-    private var lastPostID: String?
-    
+
     weak var view: PostListViewProtocol?
     var interactor: PostListInteractorInputProtocol?
     var routing: PostListRoutingProtocol?
-    
-    var posts: [PostModel] = []
     
     func viewDidLoad() {
         view?.showLoading()
@@ -24,23 +20,17 @@ class PostListPresenter: PostListPresenterProtocol {
     
     func loadMorePost() {
         view?.showLoading()
-        guard let lastPostID = lastPostID else {
-            interactor?.retrievePostList()
-            return
-        }
-        interactor?.retrievePostListFromLastPost(with: lastPostID)
+        interactor?.retrievePostList()
     }
     
     func dismissPost(_ post: PostModel) {
-        guard let index = posts.firstIndex(of: post)  else { return }
-        posts.remove(at: index)
-        view?.showPosts(with: self.posts)
+        view?.showLoading()
+        interactor?.dismissPost(post)
     }
     
     func dismissAll() {
-        self.posts = []
-        view?.showPosts(with: self.posts)
-        loadMorePost()
+        view?.showLoading()
+        interactor?.dismissAll()
     }
     
     func showPostDetail(forPost post: PostModel) {
@@ -52,10 +42,8 @@ class PostListPresenter: PostListPresenterProtocol {
 extension PostListPresenter: PostListInteractorOutputProtocol {
     
     func didRetrievePosts(_ posts: [PostModel]) {
-        self.posts.append(contentsOf: posts)
-        lastPostID = posts.last?.id
         view?.hideLoading()
-        view?.showPosts(with: self.posts)
+        view?.showPosts(with: posts)
     }
     
     func onError(_ error: Error) {

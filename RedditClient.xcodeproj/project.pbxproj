@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B22A8073252C1C7F00A7BD05 /* Date+TimeAgoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A8072252C1C7F00A7BD05 /* Date+TimeAgoTests.swift */; };
+		B22A8084252C22E700A7BD05 /* PostListLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A8083252C22E700A7BD05 /* PostListLocalDataManager.swift */; };
 		B27FAC10252BAF7A00DE8115 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27FAC0F252BAF7A00DE8115 /* AppDelegate.swift */; };
 		B27FAC12252BAF7A00DE8115 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27FAC11252BAF7A00DE8115 /* SceneDelegate.swift */; };
 		B27FAC19252BAF7D00DE8115 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B27FAC18252BAF7D00DE8115 /* Assets.xcassets */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		B22A8072252C1C7F00A7BD05 /* Date+TimeAgoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+TimeAgoTests.swift"; sourceTree = "<group>"; };
+		B22A8083252C22E700A7BD05 /* PostListLocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListLocalDataManager.swift; sourceTree = "<group>"; };
 		B27FAC0C252BAF7A00DE8115 /* RedditClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B27FAC0F252BAF7A00DE8115 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B27FAC11252BAF7A00DE8115 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +116,23 @@
 				B22A8072252C1C7F00A7BD05 /* Date+TimeAgoTests.swift */,
 			);
 			path = ExtensionTests;
+			sourceTree = "<group>";
+		};
+		B22A8081252C22C400A7BD05 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				B2AFE3ED252BBE3600508626 /* PostListRemoteDataManager.swift */,
+				B2AFE44C252BCDC800508626 /* ResponseRequest.swift */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		B22A8082252C22CE00A7BD05 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				B22A8083252C22E700A7BD05 /* PostListLocalDataManager.swift */,
+			);
+			path = Local;
 			sourceTree = "<group>";
 		};
 		B27FAC03252BAF7A00DE8115 = {
@@ -225,8 +244,8 @@
 		B2AFE3EC252BBE1B00508626 /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
-				B2AFE3ED252BBE3600508626 /* PostListRemoteDataManager.swift */,
-				B2AFE44C252BCDC800508626 /* ResponseRequest.swift */,
+				B22A8082252C22CE00A7BD05 /* Local */,
+				B22A8081252C22C400A7BD05 /* Remote */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -401,6 +420,7 @@
 				B2AFE436252BC62100508626 /* PostCollectionViewCell.swift in Sources */,
 				B2AFE431252BC5C100508626 /* RCInfoLabel.swift in Sources */,
 				B2AFE402252BC17E00508626 /* Constans.swift in Sources */,
+				B22A8084252C22E700A7BD05 /* PostListLocalDataManager.swift in Sources */,
 				B27FAC10252BAF7A00DE8115 /* AppDelegate.swift in Sources */,
 				B2AFE427252BC4E600508626 /* RCThumbnailImageView.swift in Sources */,
 				B2AFE3C5252BB74C00508626 /* PostListViewController.swift in Sources */,

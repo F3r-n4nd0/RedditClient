@@ -39,8 +39,10 @@ protocol PostListInteractorOutputProtocol: class {
 protocol PostListInteractorInputProtocol: class {
     var presenter: PostListInteractorOutputProtocol? { get set }
     var remoteDatamanager: PostListRemoteDataManagerInputProtocol? { get set }
+    var localDatamanager: PostListLocalDataManagerInputProtocol? { get set }
     func retrievePostList()
-    func retrievePostListFromLastPost(with id: String)
+    func dismissPost(_ post: PostModel)
+    func dismissAll()
 }
 
 protocol PostListRemoteDataManagerInputProtocol: class {
@@ -52,4 +54,9 @@ protocol PostListRemoteDataManagerInputProtocol: class {
 protocol PostListRemoteDataManagerOutputProtocol: class {
     func onPostsRetrieved(_ posts: [PostModel])
     func onError(_ error: RCErrorRemoteDataManager)
+}
+
+protocol PostListLocalDataManagerInputProtocol: class {
+    func retrieveReadIdPosts() throws -> [String]
+    func saveReadIdPosts(ids: [String]) throws
 }

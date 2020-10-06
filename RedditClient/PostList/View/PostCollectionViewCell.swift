@@ -21,7 +21,8 @@ class PostCollectionViewCell: UICollectionViewCell {
     private let titleLabel = RCTitleLabel(textAlignment: .left, fontSize: 16)
     private let infoLabel = RCInfoLabel(textAlignment: .left)
     private let numberCommentsLabel = RCInfoLabel(textAlignment: .left)
-    private let unreadDismissButton =  RCFootNoteButton(title: "Dismiss")
+    private let dismissButton =  RCFootNoteButton(title: "Dismiss")
+    private let unreadStatusLabel = RCInfoLabel(textColor: .label ,textAlignment: .left)
     
     weak var delegate: PostCollectionViewCellDelegate?
     
@@ -33,6 +34,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         configureInfoLabel()
         configureTitleLabel()
         configureDismissButton()
+        configureUnreadStatusLabel()
     }
     
     required init?(coder: NSCoder) {
@@ -53,6 +55,7 @@ class PostCollectionViewCell: UICollectionViewCell {
         case .unknown:
             thumbnailImageView.image = Image.placeholder
         }
+        unreadStatusLabel.text = post.readStatus.rawValue
     }
     
     
@@ -106,12 +109,22 @@ class PostCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureDismissButton() {
-        contentView.addSubview(unreadDismissButton)
-        unreadDismissButton.addTarget(self, action: #selector(touchUpInsideDismissButton), for: .touchUpInside)
+        contentView.addSubview(dismissButton)
+        dismissButton.addTarget(self, action: #selector(touchUpInsideDismissButton), for: .touchUpInside)
         NSLayoutConstraint.activate([
-            unreadDismissButton.leadingAnchor.constraint(equalTo: numberCommentsLabel.trailingAnchor, constant: 10),
-            unreadDismissButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
-            unreadDismissButton.heightAnchor.constraint(equalToConstant: 15)
+            dismissButton.leadingAnchor.constraint(equalTo: numberCommentsLabel.trailingAnchor, constant: 10),
+            dismissButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
+            dismissButton.heightAnchor.constraint(equalToConstant: 15)
+        ])
+    }
+    
+    private func configureUnreadStatusLabel() {
+        contentView.addSubview(unreadStatusLabel)
+        NSLayoutConstraint.activate([
+            unreadStatusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
+            unreadStatusLabel.leadingAnchor.constraint(equalTo: dismissButton.trailingAnchor, constant: 10),
+            unreadStatusLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
+            unreadStatusLabel.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
     

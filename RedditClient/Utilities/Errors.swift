@@ -14,3 +14,8 @@ enum RCErrorRemoteDataManager: Error {
     case invalidResponse
     case invalidData
 }
+
+enum RCPersistenceError: Error {
+    case couldNotSaveObject
+    case objectNotFound
+}

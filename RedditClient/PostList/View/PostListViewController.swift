@@ -70,7 +70,12 @@ class PostListViewController: RCDataLoadingViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(posts)
         DispatchQueue.main.async {
-            self.dataSource.apply(snapshot, animatingDifferences: true)
+            self.dataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
+                guard let self = self else { return }
+                if posts.count == self.collectionView.visibleCells.count {
+                    self.presenter?.loadMorePost()
+                }
+            }
         }
     }
     

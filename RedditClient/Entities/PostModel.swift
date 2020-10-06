@@ -9,10 +9,10 @@ import Foundation
 
 struct PostModel {
     
-    enum ReadStatus {
-        case unknown
-        case read
-        case unreaded
+    enum ReadStatus: String {
+        case unknown = "Unknown"
+        case read = "Read"
+        case unread = "Unread"
     }
     
     enum Thumbnail  {
