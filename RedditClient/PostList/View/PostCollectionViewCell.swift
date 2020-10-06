@@ -50,6 +50,8 @@ class PostCollectionViewCell: UICollectionViewCell {
             thumbnailImageView.downloadImage(fromURL: url)
         case .selfImage:
             thumbnailImageView.image = Image.doc
+        case .unknown:
+            thumbnailImageView.image = Image.placeholder
         }
     }
     

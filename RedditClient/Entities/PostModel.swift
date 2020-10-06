@@ -16,6 +16,7 @@ struct PostModel {
     }
     
     enum Thumbnail  {
+        case unknown
         case defaultImage
         case selfImage
         case image(url: URL)
@@ -67,6 +68,8 @@ extension PostModel: Decodable {
             thumbnail = .selfImage
         case "default":
             thumbnail = .defaultImage
+        case "":
+            thumbnail = .unknown
         default:
             thumbnail = .image(url: URL(string: thumbnailString)!)
         }

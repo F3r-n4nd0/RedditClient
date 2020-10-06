@@ -8,10 +8,10 @@
 import Foundation
 
 struct ResponseRequest: Decodable {
-    let data: Data
+    let data: DataRequest
 }
 
-struct Data: Decodable {
+struct DataRequest: Decodable {
     let children: [Children]
 }
 
