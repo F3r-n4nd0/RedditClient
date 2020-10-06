@@ -15,4 +15,5 @@ enum Image {
     static let placeholder = UIImage(systemName: "placeholdertext.fill")
     static let link = UIImage(systemName: "link.circle")
     static let doc = UIImage(systemName: "doc.plaintext")
+    static let trash = UIImage(systemName: "trash.fill")
 }

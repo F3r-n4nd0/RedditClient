@@ -27,10 +27,16 @@ class PostListViewController: RCDataLoadingViewController {
         configureDataSource()
     }
     
+    @objc private func selectButtonDismissAll() {
+        presenter?.dismissAll()
+    }
+    
     private func configureViewController() {
         title = "Reddit - Top /all"
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Color.baseColor
+        let dismissAllButton = UIBarButtonItem(title: "Dismiss All", style: .plain, target: self, action: #selector(selectButtonDismissAll))
+        navigationItem.rightBarButtonItem = dismissAllButton
     }
     
     private func configureCollectionView() {

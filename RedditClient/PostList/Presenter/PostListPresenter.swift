@@ -37,6 +37,12 @@ class PostListPresenter: PostListPresenterProtocol {
         view?.showPosts(with: self.posts)
     }
     
+    func dismissAll() {
+        self.posts = []
+        view?.showPosts(with: self.posts)
+        loadMorePost()
+    }
+    
     func showPostDetail(forPost post: PostModel) {
         routing?.presentPostDetailScreen(from: view!, forPost: post)
     }
