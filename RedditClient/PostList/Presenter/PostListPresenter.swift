@@ -15,6 +15,8 @@ class PostListPresenter: PostListPresenterProtocol {
     var interactor: PostListInteractorInputProtocol?
     var routing: PostListRoutingProtocol?
     
+    var posts: [PostModel] = []
+    
     func viewDidLoad() {
         view?.showLoading()
         interactor?.retrievePostList()
@@ -38,9 +40,10 @@ class PostListPresenter: PostListPresenterProtocol {
 extension PostListPresenter: PostListInteractorOutputProtocol {
     
     func didRetrievePosts(_ posts: [PostModel]) {
-        view?.hideLoading()
-        view?.showPosts(with: posts)
+        self.posts.append(contentsOf: posts)
         lastPostID = posts.last?.id
+        view?.hideLoading()
+        view?.showPosts(with: self.posts)
     }
     
     func onError(_ error: Error) {

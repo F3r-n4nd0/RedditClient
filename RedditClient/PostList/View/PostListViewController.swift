@@ -13,9 +13,8 @@ class PostListViewController: RCDataLoadingViewController {
     
     var presenter: PostListPresenterProtocol?
     
-    var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, PostModel>!
-    var posts: [PostModel] = []
+    private var collectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, PostModel>!
     
     private let columnLayoutPortrait = UIHelper.createColumnFlowLayout(with: 1)
     private let columnLayoutLandscape = UIHelper.createColumnFlowLayout(with: 2)
@@ -59,10 +58,10 @@ class PostListViewController: RCDataLoadingViewController {
         }
     }
     
-    private func updatePosts() {
+    private func updateDataSource(with posts:[PostModel]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section,PostModel>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(self.posts)
+        snapshot.appendItems(posts)
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
@@ -85,12 +84,14 @@ class PostListViewController: RCDataLoadingViewController {
 extension PostListViewController: PostListViewProtocol {
     
     func showPosts(with posts: [PostModel]) {
-        self.posts.append(contentsOf: posts)
-        updatePosts()
+        updateDataSource(with: posts)
     }
     
     func showError(message: String) {
-        
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     func showLoading() {
